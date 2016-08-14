@@ -18,4 +18,4 @@ $ make install
 If there is no error after running above commands, the installation is complete. For finish the environment setup, configure the root Makefile setting your correct SystemC path on `SYSTEMC` variable.
 
 ## Running examples
-To run the repository examples, just enter on the desired example folder and run `$ make`. You will be able now to run the `main` executable on console.
+To run the repository examples, just enter on the desired example on the `src/` folder and run `$ make` for build the source. You will be able now to run the `main` executable on console.
