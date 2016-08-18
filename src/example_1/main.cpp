@@ -28,5 +28,6 @@ int sc_main(int argc, char* argv[]) {
   sc_trace(Tf, DUT.S3, "S3");
 
   sc_start();
+  sc_close_vcd_trace_file(Tf);
   return 0;
 }
