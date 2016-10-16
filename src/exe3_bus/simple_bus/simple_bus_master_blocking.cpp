@@ -37,32 +37,57 @@
 
 void simple_bus_master_blocking::main_action()
 {
-  const unsigned int mylength = 0x10; // storage capacity/burst length in words
-  int mydata[mylength];
-  unsigned int i;
+  int mydata;
+  unsigned int i = 0;
+  unsigned int shift = 0;
+  const int num_items = 1000;
+  const unsigned int mylength = 0x04; 
+  unsigned int addr_mem_1 = 0x00;
+  unsigned int addr_mem_2 = 0xFA0;
   simple_bus_status status;
 
   while (true)
-    {
-      wait(); // ... for the next rising clock edge
-      status = bus_port->burst_read(m_unique_priority, mydata, 
-				    m_address, mylength, m_lock);
-      if (status == SIMPLE_BUS_ERROR)
-	sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
-		   sc_time_stamp().to_string().c_str(), name(), m_address);
+  {
+    wait();
+    status = bus_port->burst_read(m_unique_priority, &mydata, 
+                                  addr_mem_1 + shift, 1, m_lock);
+    if (status == SIMPLE_BUS_ERROR)
+        sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
+                   sc_time_stamp().to_string().c_str(), name(), addr_mem_1 + shift);
 
-      for (i = 0; i < mylength; ++i)
-	{
-	  mydata[i] += i;
-	  wait();
-	}
+    status = bus_port->burst_write(m_unique_priority, &mydata, 
+                                   addr_mem_2 + shift, 1, m_lock);
+    if (status == SIMPLE_BUS_ERROR)
+      sb_fprintf(stdout, "%s %s : blocking-write failed at address %x\n",
+                 sc_time_stamp().to_string().c_str(), name(), addr_mem_2 + shift);
 
-      status = bus_port->burst_write(m_unique_priority, mydata, 
-				     m_address, mylength, m_lock);
-      if (status == SIMPLE_BUS_ERROR)
-	sb_fprintf(stdout, "%s %s : blocking-write failed at address %x\n",
-		   sc_time_stamp().to_string().c_str(), name(), m_address);
+    wait(m_timeout, SC_NS);
 
-      wait(m_timeout, SC_NS);
+    i++;
+    shift += mylength;
+
+    if (i == num_items) {
+      sb_fprintf(stdout, "SWAP FINISHED: %s\n", sc_time_stamp().to_string().c_str() );
+
+      i = 0;
+      shift = 0;
+
+      while(i < num_items) {
+        status = bus_port->burst_read(m_unique_priority, &mydata, 
+                                      addr_mem_2 + shift, 1, m_lock);
+        if (status == SIMPLE_BUS_ERROR) {
+            sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
+                       sc_time_stamp().to_string().c_str(), name(), addr_mem_2 + shift);
+        } else {
+          sb_fprintf(stdout, "%d|", mydata);
+        }
+
+        shift += mylength;
+        i++;
+      }
+      
+      sb_fprintf(stdout, "\n");
+      break;
     }
+  }
 }

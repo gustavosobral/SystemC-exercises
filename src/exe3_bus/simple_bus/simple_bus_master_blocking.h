@@ -52,13 +52,11 @@ SC_MODULE(simple_bus_master_blocking)
 
   // constructor
   simple_bus_master_blocking(sc_module_name name_
-			     , unsigned int unique_priority
-			     , unsigned int address
+			     , unsigned int unique_priority			     
                              , bool lock
                              , int timeout)
     : sc_module(name_)
     , m_unique_priority(unique_priority)
-    , m_address(address)
     , m_lock(lock)
     , m_timeout(timeout)
   {
@@ -72,7 +70,6 @@ SC_MODULE(simple_bus_master_blocking)
 
 private:
   unsigned int m_unique_priority;
-  unsigned int m_address;
   bool m_lock;
   int m_timeout;
 

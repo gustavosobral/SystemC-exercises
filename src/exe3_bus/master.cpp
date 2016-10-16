@@ -21,13 +21,13 @@ SC_MODULE(master) {
     arbiter = new simple_bus_arbiter("arbiter");
     mem_slow1 = new simple_bus_slow_mem("mem_slow1", 0x00, 0xF9F, 1);
     mem_slow2 = new simple_bus_slow_mem("mem_slow2", 0xFA0, 0x1F3F, 1);
-    master_b = new simple_bus_master_blocking("master_b", 1, 0x4c, false, 300);
+    master_b = new simple_bus_master_blocking("master_b", 1, false, 300);
 
     // populate slow memory 1
     int i, data;
     unsigned int address = 0x00;
     for(i = 0; i < 1000; i++) {
-      data = i*i;
+      data = i+i;
       mem_slow1->direct_write(&data, address);
       address += 4;
     }
