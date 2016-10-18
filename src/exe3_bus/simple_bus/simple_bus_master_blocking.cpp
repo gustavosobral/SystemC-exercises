@@ -35,25 +35,20 @@
 
 #include "simple_bus_master_blocking.h"
 
-void simple_bus_master_blocking::main_action()
-{
+void simple_bus_master_blocking::main_action() {
   int mydata;
   unsigned int i = 0;
   unsigned int shift = 0;
-  const int num_items = 1000;
-  const unsigned int mylength = 0x04; 
-  unsigned int addr_mem_1 = 0x00;
-  unsigned int addr_mem_2 = 0xFA0;
   simple_bus_status status;
 
-  while (true)
-  {
+  while (true) {
     wait();
+
     status = bus_port->burst_read(m_unique_priority, &mydata, 
                                   addr_mem_1 + shift, 1, m_lock);
     if (status == SIMPLE_BUS_ERROR)
-        sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
-                   sc_time_stamp().to_string().c_str(), name(), addr_mem_1 + shift);
+      sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
+                 sc_time_stamp().to_string().c_str(), name(), addr_mem_1 + shift);
 
     status = bus_port->burst_write(m_unique_priority, &mydata, 
                                    addr_mem_2 + shift, 1, m_lock);
@@ -64,10 +59,10 @@ void simple_bus_master_blocking::main_action()
     wait(m_timeout, SC_NS);
 
     i++;
-    shift += mylength;
+    shift += word_length;
 
     if (i == num_items) {
-      sb_fprintf(stdout, "SWAP FINISHED: %s\n", sc_time_stamp().to_string().c_str() );
+      sb_fprintf(stdout, "\n\nFINISHED: %s\n\n", sc_time_stamp().to_string().c_str() );
 
       i = 0;
       shift = 0;
@@ -76,13 +71,13 @@ void simple_bus_master_blocking::main_action()
         status = bus_port->burst_read(m_unique_priority, &mydata, 
                                       addr_mem_2 + shift, 1, m_lock);
         if (status == SIMPLE_BUS_ERROR) {
-            sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
-                       sc_time_stamp().to_string().c_str(), name(), addr_mem_2 + shift);
+          sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
+                     sc_time_stamp().to_string().c_str(), name(), addr_mem_2 + shift);
         } else {
-          sb_fprintf(stdout, "%d|", mydata);
+          sb_fprintf(stdout, "%04d|", mydata);
         }
 
-        shift += mylength;
+        shift += word_length;
         i++;
       }
       
