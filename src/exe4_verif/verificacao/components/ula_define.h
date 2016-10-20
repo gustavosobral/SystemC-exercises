@@ -1,7 +1,7 @@
 #include <report_server.h>
 
 #define ULA_SEED          1
-#define ULA_TIMEOUT       2000
+#define ULA_TIMEOUT       50000
 #define ULA_TIMEUNIT      SC_NS
 
 #define DATA_NUMBER_BITS  8
