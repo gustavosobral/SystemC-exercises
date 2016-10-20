@@ -39,6 +39,27 @@ SC_MODULE (ula_test) {
     else if (string(name) == "ula_test_op0") {
       t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 0);
     }
+    else if (string(name) == "ula_test_op1") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 1);
+    }
+    else if (string(name) == "ula_test_op2") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 2);
+    }
+    else if (string(name) == "ula_test_op3") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 3);
+    }
+    else if (string(name) == "ula_test_op4") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 4);
+    }
+    else if (string(name) == "ula_test_op5") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 5);
+    }
+    else if (string(name) == "ula_test_op6") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 6);
+    }
+    else if (string(name) == "ula_test_op7") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 7);
+    }
     else {
       SC_REPORT_FATAL(name, "Test not register");
     }
