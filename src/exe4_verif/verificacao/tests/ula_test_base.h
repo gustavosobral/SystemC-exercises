@@ -15,6 +15,7 @@ public :
   int          NI; // Number of interactions
   unsigned int seed; //Seed used in randomization and PRBS
   string testname;
+  int sel;
 
   //+--------------------------------------------------------------------------
   //| Components Members
@@ -28,13 +29,15 @@ public :
                 ula_rst_interface* sc_rst_if,
                 ula_interface*     test_sc_if,
                 ula_interface*     rm_test_sc_if,
-                test_config*       tst_cfg) {
+                test_config*       tst_cfg,
+                int _sel = -1) {
     INFO(_name, "Constructor", MEDIUM);
     ula_env = new ula_environment("ula_env", sc_rst_if, test_sc_if, rm_test_sc_if);
     name = _name;
     testname = tst_cfg->testname;
     NI   = tst_cfg->NI;
     seed = tst_cfg->seed;
+    sel = _sel;
     srand(seed);
   }
 

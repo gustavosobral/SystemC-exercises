@@ -36,7 +36,10 @@ SC_MODULE (ula_test) {
     else if (string(name) == "ula_test_random") {
       t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg);
     }
-    else  {
+    else if (string(name) == "ula_test_op0") {
+      t = new ula_test_random(name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, 0);
+    }
+    else {
       SC_REPORT_FATAL(name, "Test not register");
     }
 

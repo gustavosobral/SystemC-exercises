@@ -11,7 +11,8 @@ public :
                   ula_rst_interface* sc_rst_if,
                   ula_interface*     test_sc_if,
                   ula_interface*     rm_test_sc_if,
-                  test_config*       tst_cfg) : ula_test_base(_name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg) {
+                  test_config*       tst_cfg,
+                  int sel = -1  ) : ula_test_base(_name, sc_rst_if, test_sc_if, rm_test_sc_if, tst_cfg, sel) {
   }
 
   //+--------------------------------------------------------------------------
@@ -35,10 +36,16 @@ public :
     INFO(name, " Set seed");
     ula_env->ula_drv->set_seed(seed);
 
-
-    for (int i = 0; i < NI; i++) {
-      INFO(name, " Generate random data");
-      ula_env->ula_drv->randomize();
+    if (sel != -1) {
+      for (int i = 0; i < NI; i++) {
+        INFO(name, " Generate random data");
+        ula_env->ula_drv->randomize(sel);
+      }
+    } else {
+      for (int i = 0; i < NI; i++) {
+        INFO(name, " Generate random data");
+        ula_env->ula_drv->randomize();
+      }
     }
 
     INFO(name, " Finished test!!!");
