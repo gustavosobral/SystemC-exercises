@@ -3,3 +3,6 @@
 
 main
 traces.vcd
+
+results/
+run_verification
