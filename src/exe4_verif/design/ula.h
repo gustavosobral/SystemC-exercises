@@ -15,12 +15,12 @@ SC_MODULE(ula)
   sc_in<data_t> in_data_a; //Data input
   sc_in<data_t> in_data_b; //Data input
   sc_in<sel_t>  in_sel;    //select the operation
-  
+
   sc_out<data_t> out_data;     //Data output
   sc_out<bool>   out_carryout; //Carry out flag
   sc_out<bool>   out_data_rdy; //Flag to say that the out_data is valid
   void func();
-  
+
   ula(sc_module_name nm);
 
 }; // end of SC_MODULE
