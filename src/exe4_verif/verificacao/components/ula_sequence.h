@@ -25,6 +25,26 @@ void ula_driver::randomize()
 }
 
 //+--------------------------------------------------------------------------
+//| FUNCTION: randomize
+//+--------------------------------------------------------------------------
+//! Generate a randomize data with defined selection
+//+--------------------------------------------------------------------------
+void ula_driver::randomize(int sel)
+{
+  stringstream msg;
+  ula_sqi->data_enable = 1;
+  ula_sqi->data_a = rand() % 256;
+  ula_sqi->data_b = rand() % 256;
+  ula_sqi->sel    = sel;
+  msg << "Generate: data_a = " << ula_sqi->data_a << "| data_b = " << ula_sqi->data_b << "| sel = " << ula_sqi->sel;
+  INFO(name(), msg.str().c_str(), HIGH);
+  msg.str(""); //clean
+
+  update_interface = 1;
+  wait(1);
+}
+
+//+--------------------------------------------------------------------------
 //| FUNCTION: set_data
 //+--------------------------------------------------------------------------
 //! Receive a double data and passe to in_data_a and in_data_b

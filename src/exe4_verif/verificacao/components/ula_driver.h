@@ -48,6 +48,7 @@ SC_MODULE(ula_driver)
   void set_data(double , double);
   void set_sel(int);
   void randomize();
+  void randomize(int);
 
   SC_HAS_PROCESS(ula_driver);
   ula_driver(sc_module_name name, ula_interface * in_if)
