@@ -151,16 +151,23 @@ void ula_checker::compare_dut_refmod(ula_sequence_item item) {
   find_valid = 0;
 
   if (ula_rm_sqi.data_out != item.data_out) {
-    msg << "MISMATCH between DUT and Reference Model: data_valid(DUT) = " << ula_sqi.data_out << " - data_valid(DUT) = " << ula_rm_sqi.data_out;
+    msg << "MISMATCH between DUT and Reference Model: data_out(DUT) = " << ula_sqi.data_out << " - data_out(RM) = " << ula_rm_sqi.data_out;
     ERROR(name(), msg.str().c_str());
     msg.str(""); //clean
   }
-  else {
-    msg << "MATCH between DUT and Reference Model:data_valid(DUT) = " << ula_sqi.data_out << " - data_valid(DUT) = " << ula_rm_sqi.data_out;;
+  if (ula_rm_sqi.carryout != item.carryout) {
+    msg << "MISMATCH between DUT and Reference Model: carryout(DUT) = " << ula_sqi.carryout << " - carryout(RM) = " << ula_rm_sqi.carryout;
+    ERROR(name(), msg.str().c_str());
+    msg.str(""); //clean
+  }
+  if (ula_rm_sqi.data_out == item.data_out && ula_rm_sqi.carryout == item.carryout) {
+    msg << "MATCH between DUT and Reference Model: data_out(DUT) = " << ula_sqi.data_out << " - data_out(RM) = " << ula_rm_sqi.data_out;
+    INFO(name(), msg.str().c_str(), HIGH);
+    msg.str(""); //clean
+    msg << "MATCH between DUT and Reference Model: carryout(DUT) = " << ula_sqi.carryout << " - carryout(RM) = " << ula_rm_sqi.carryout;
     INFO(name(), msg.str().c_str(), HIGH);
     msg.str(""); //clean
   }
-
 }
 
 #endif /* VIP_SC_CHK_H_ */
