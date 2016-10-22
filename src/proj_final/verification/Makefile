@@ -1,7 +1,7 @@
 SET_WAVEFORM = 0
 
 BLOCK_PATH = $$PWD/..
-BLOCK_TB = $(BLOCK_PATH)/verificacao
+BLOCK_TB = $(BLOCK_PATH)/verification
 
 CC=g++
 
@@ -25,7 +25,7 @@ ifeq ($(SET_WAVEFORM),1)
 endif
 
 #REFERENCE MODEL
-PATH_RM = $(BLOCK_PATH)/modelo_referencia
+PATH_RM = $(BLOCK_PATH)/reference_model
 ARCH_RM = $(PATH_RM)/rm_filter.cpp 
 
 #DUT
