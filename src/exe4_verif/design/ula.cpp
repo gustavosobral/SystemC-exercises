@@ -28,24 +28,35 @@ void ula::func()
     } else if (in_data_en.read() == 1) {
       if (in_sel.read() ==  0) {
         temp_out_data = in_data_a.read() + in_data_b.read();
-        out_carryout.write(0);
+        if (temp_out_data & 0x100) {
+          out_carryout.write(1);
+        } else {
+          out_carryout.write(0);
+        }
       } else if (in_sel.read() == 1) {
         temp_out_data = in_data_a.read() - in_data_b.read();
-        out_carryout.write(0);
+        if (temp_out_data & 0x100) {
+          out_carryout.write(1);
+        } else {
+          out_carryout.write(0);
+        }
       } else if (in_sel.read() == 2) {
-        temp_out_data = in_data_a.read();
+        temp_out_data = ~in_data_a.read();
         out_carryout.write(0);
       } else if (in_sel.read() == 3) {
         temp_out_data = in_data_a.read() & in_data_b.read();
         out_carryout.write(0);
       } else if (in_sel.read() == 4) {
-        temp_out_data = in_data_a.read() | ~in_data_b.read();
+        temp_out_data = in_data_a.read() | in_data_b.read();
         out_carryout.write(0);
+      } else if (in_sel.read() == 5) {
+        temp_out_data = ~in_data_b.read();
+        out_carryout.write(0); 
       } else if (in_sel.read() == 6) {
         temp_out_data = in_data_a.read() << in_data_b.read();
         out_carryout.write(0);
       } else if (in_sel.read() == 7) {
-        temp_out_data = in_data_a.read() ^ in_data_a.read();
+        temp_out_data = in_data_a.read() ^ in_data_b.read();
         out_carryout.write(0);
       } else {
         temp_out_data = 0;
