@@ -7,14 +7,12 @@ CC=g++
 
 CPPFLAGS = -lsystemc -lm -pthread
 
-SYSTEMC_HOME := /home/gustavo/Applications/systemc-2.3.1
-
-SYSTEMC_LIB = $(SYSTEMC_HOME)/lib-linux64/libsystemc.a
+SYSTEMC_LIB = $$SYSTEMC_HOME/lib-linux64/libsystemc.a
 LIBS =  $(SYSTEMC_LIB)
 
 SYSTEMCFLAGS += -DSC_INCLUDE_DYNAMIC_PROCESSES
-SYSTEMCFLAGS += -I$(SYSTEMC_HOME)/include
-SYSTEMCLIBS += -L$(SYSTEMC_HOME)/lib-linux64 -Wl,-rpath=$(SYSTEMC_HOME)/lib-linux64
+SYSTEMCFLAGS += -I$$SYSTEMC_HOME/include
+SYSTEMCLIBS += -L$$SYSTEMC_HOME/lib-linux64 -Wl,-rpath=$$SYSTEMC_HOME/lib-linux64
 
 #TESTBENCH 
 INC_COMP   = -I$(BLOCK_TB)/components
