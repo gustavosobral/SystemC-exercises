@@ -23,7 +23,7 @@ public:
   int     A8;
   int     A9;
 
-  //Output
+  // Output
   int   F;
   bool   data_valid;
 

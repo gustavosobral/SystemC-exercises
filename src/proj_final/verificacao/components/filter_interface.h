@@ -10,7 +10,7 @@ class filter_interface
 
 public:
 
-  sc_signal<bool>       in_data_en;
+  sc_signal<bool> in_data_en;
   sc_signal<sc_uint<8> > A1;
   sc_signal<sc_uint<8> > A2;
   sc_signal<sc_uint<8> > A3;

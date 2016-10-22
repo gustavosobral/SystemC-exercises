@@ -10,7 +10,7 @@
 #define FILTER_TEST_CONFIG
 struct test_config {
   int          NI;    // Number of interactions
-  unsigned int seed;  //Seed used in randomization and PRBS
+  unsigned int seed;  // Seed used in randomization and PRBS
   string testname;
 };
 #endif

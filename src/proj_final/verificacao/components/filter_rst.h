@@ -74,7 +74,6 @@ SC_MODULE(filter_rst)
     SC_THREAD(wait_clock2)
     sensitive << clock2.pos();
     dont_initialize();
-
   }
 };
 
@@ -147,7 +146,6 @@ void filter_rst::sync_reset(int time_hi = 5, int time_low = 2)
 //+--------------------------------------------------------------------------
 void filter_rst::async_reset(bool fast_reset = 0)
 {
-  //INFO(this->name(), "Asserting async reset signal....");
   areset = 1;
   fast_async_reset = fast_reset;
 }
@@ -159,16 +157,12 @@ void filter_rst::async_reset(bool fast_reset = 0)
 //+--------------------------------------------------------------------------
 void filter_rst::wait_clock2()
 {
-
   unsigned int rst_dly, fast_dly;
   rst_dly = get_random_number(15, 45);
   fast_dly =  get_random_number(5, 45);
 
   while (true) {
-    //if(areset.read() == 1) {
     if (areset) {
-      //INFO(this->name(), "Reset signal detected....");
-      //is_rst = 1;
       rst_if->reset_n.write(1);
       wait(rst_dly * 10);
       rst_if->reset_n.write(0);
@@ -176,7 +170,6 @@ void filter_rst::wait_clock2()
       else { wait(rst_dly * 10); }
       rst_if->reset_n.write(1);
       areset = 0;
-
     }
     wait(1);
   }

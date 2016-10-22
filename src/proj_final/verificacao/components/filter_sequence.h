@@ -34,33 +34,3 @@ void filter_driver::randomize()
   update_interface = 1;
   wait(1);
 }
-
-
-//+--------------------------------------------------------------------------
-//| FUNCTION: set_data
-//+--------------------------------------------------------------------------
-//! Receive a double data and passe to in_data_a and in_data_b
-//+--------------------------------------------------------------------------
-// void filter_driver::set_data(double data_a, double data_b)
-// {
-//   stringstream msg;
-//   filter_sqi->data_enable = 1;
-
-//   filter_sqi->data_a = data_a;
-//   filter_sqi->data_b = data_b;
-
-//   update_interface = 1;
-// }
-
-//+--------------------------------------------------------------------------
-//| FUNCTION: set_sel
-//+--------------------------------------------------------------------------
-//! Receive a int data and passe to in_sel
-//+--------------------------------------------------------------------------
-// void filter_driver::set_sel(int sel)
-// {
-//   stringstream msg;
-//   filter_sqi->sel = sel;
-
-//   update_interface = 1;
-// }
