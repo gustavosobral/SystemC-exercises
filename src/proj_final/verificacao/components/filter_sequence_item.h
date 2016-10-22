@@ -37,4 +37,5 @@ public:
 std::ostream & operator << (std::ostream &os, const filter_sequence_item &item) {
   return os << "instance item of ULA block";
 }
+
 #endif /* _SQI_ITEM_H_ */

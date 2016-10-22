@@ -21,5 +21,4 @@ public:
   ~filter_rst_interface() {}
 };
 
-
 #endif

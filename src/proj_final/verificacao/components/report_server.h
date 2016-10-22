@@ -165,4 +165,3 @@ int       report_server::report::total_errors;
 //+--------------------------------------------------------------------------
 using namespace report_server;
 #endif
-

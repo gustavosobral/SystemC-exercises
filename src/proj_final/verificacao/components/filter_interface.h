@@ -28,5 +28,4 @@ public:
   ~filter_interface() {}
 };
 
-
 #endif /* _IF_H_ */

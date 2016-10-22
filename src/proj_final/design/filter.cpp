@@ -15,7 +15,7 @@ filter::filter(sc_module_name nm):
 void filter::func()
 {
   int iA1, iA2, iA3, iA4, iA5, iA6, iA7, iA8, iA9, iF;
-  // reset
+
   while (true)
   {
     if (reset_n.read() == false) {
@@ -32,7 +32,7 @@ void filter::func()
       iA8 = A8.read();
       iA9 = A9.read();
 
-      iF = (iA1 + iA2 + iA3 + iA4 + iA5 + iA6 + iA7 + iA8 + iA9 ) / 9 ;
+      iF = (iA1 + iA2 + iA3 + iA4 + iA5 + iA6 + iA7 + iA8 + iA9) / 9;
 
       F.write(iF);
       out_data_rdy.write(1);

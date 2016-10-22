@@ -4,8 +4,8 @@ SC_HAS_PROCESS(rm_filter);
 rm_filter::rm_filter(sc_module_name nm):
   sc_module   (nm),
   clock       ("clock"),
-  in_data_en  ("in_data_en"),
   reset_n     ("reset_n"),
+  in_data_en  ("in_data_en"),
   out_data_rdy("out_data_rdy")
 {
   SC_CTHREAD(func, clock.pos());
@@ -15,7 +15,7 @@ rm_filter::rm_filter(sc_module_name nm):
 void rm_filter::func()
 {
   int iA1, iA2, iA3, iA4, iA5, iA6, iA7, iA8, iA9, iF;
-  // reset
+
   while (true)
   {
     if (reset_n.read() == false) {
@@ -32,13 +32,8 @@ void rm_filter::func()
       iA8 = A8.read();
       iA9 = A9.read();
 
-      iF = (iA1 + iA2 + iA3 + iA4 + iA5 + iA6 + iA7 + iA8 + iA9 );
-
-      // std::cout << "Soma = " << iA1 << " + " << iA2 << " + " << iA3 << " + " << iA4 << " + " << iA5 << " + "
-      // << iA6 << " + " << iA7 << " + " << iA8 << " + " << iA9 << " = "<< iF;
-
+      iF = (iA1 + iA2 + iA3 + iA4 + iA5 + iA6 + iA7 + iA8 + iA9);
       iF = iF / 9;
-      // std::cout << " | Media = " << iF << std::endl;
 
       F.write(iF);
       out_data_rdy.write(1);

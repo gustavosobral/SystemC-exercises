@@ -133,15 +133,12 @@ void filter_checker::compare_reset(filter_sequence_item item) {
   }
 }
 
-
 //+--------------------------------------------------------------------------
 //| FUNCTION: compare_dut_refmod
 //+--------------------------------------------------------------------------
 //! Compare output values between reference model and dut
 //+--------------------------------------------------------------------------
 void filter_checker::compare_dut_refmod(filter_sequence_item item) {
-
-
   stringstream msg;
   bool find_valid = 0;
   filter_sequence_item filter_rm_sqi;
@@ -155,27 +152,18 @@ void filter_checker::compare_dut_refmod(filter_sequence_item item) {
     }
   }
   find_valid = 0;
-  // int *a;
-  // a = item.sel;
-
-  // INFO(name(), "nO compare_dut_refmod", MEDIUM);
 
   if (filter_rm_sqi.F != item.F) {
     msg << "MISMATCH between DUT and Reference Model: data_valid(DUT) = " << item.F << " - data_valid(RM) = "
         << filter_rm_sqi.F;
     ERROR(name(), msg.str().c_str());
-    msg.str(""); //clean
-  }
-
-  else {
-    //INFO(name(), "nO ELSE compare_dut_refmod", MEDIUM);
+    msg.str("");
+  } else {
     msg << "MATCH between DUT and Reference Model: data_valid(DUT) = " << item.F << " - data_valid(RM) = "
         << filter_rm_sqi.F;
     INFO(name(), msg.str().c_str(), HIGH);
-    //INFO(name(), msg.str().c_str(), MEDIUM);
-    msg.str(""); //clean
+    msg.str("");
   }
-
 }
 
 #endif /* VIP_SC_CHK_H_ */
