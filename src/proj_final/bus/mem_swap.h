@@ -35,7 +35,7 @@ SC_MODULE(mem_swap)
     int i, data;
     unsigned int addr = 0x00;
     for (i = 0; i < 1000; i++) {
-      data = i * (i - 1) + 1;
+      data = rand() % 256;
       mem_slow_init->direct_write(&data, addr);
       addr += 4;
     }
