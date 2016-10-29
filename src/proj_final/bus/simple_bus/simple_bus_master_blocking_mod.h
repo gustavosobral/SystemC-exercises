@@ -37,22 +37,14 @@
 #define __simple_bus_master_blocking_h
 
 #include <systemc.h>
-#include <stdlib.h>
 
 #include "simple_bus_types.h"
 #include "simple_bus_blocking_if.h"
-//#include "../design/filter.h"
-#include "filter.h"
-#include "../verificacao/components/filter_interface.h"
-#include "../verificacao/components/filter_rst_interface.h"
-#include "filter_rst.h"
-
 
 SC_MODULE(simple_bus_master_blocking)
 {
   // ports
   sc_in_clk clock;
-
   sc_port<simple_bus_blocking_if> bus_port;
 
   SC_HAS_PROCESS(simple_bus_master_blocking);
@@ -66,35 +58,7 @@ SC_MODULE(simple_bus_master_blocking)
     , m_unique_priority(unique_priority)
     , m_lock(lock)
     , m_timeout(timeout)
-    , filter_("my_filter")
-    , clk("Clock", 10, SC_NS, 0.5)
   {
-    // process declaration
-    rst_if     = new filter_rst_interface();   //reset
-    filter_if     = new filter_interface();
-
-    filter_reset = new filter_rst("filter_reset", rst_if);
-    filter_reset->clock(rst_if->clk);
-    filter_reset->clock2(rst_if->clk2);
-
-    filter_.clock   (rst_if->clk);
-    filter_.reset_n (rst_if->reset_n);
-
-    filter_.in_data_en  (filter_if->in_data_en);
-    filter_.A1   (filter_if->A1);
-    filter_.A2   (filter_if->A2);
-    filter_.A3   (filter_if->A3);
-    filter_.A4   (filter_if->A4);
-    filter_.A5   (filter_if->A5);
-    filter_.A6   (filter_if->A6);
-    filter_.A7   (filter_if->A7);
-    filter_.A8   (filter_if->A8);
-    filter_.A9   (filter_if->A9);
-
-    //Output signals
-    filter_.F    (filter_if->F);
-    filter_.out_data_rdy(filter_if->out_data_rdy);
-
     SC_THREAD(main_action);
     sensitive << clock.pos();
   }
@@ -104,16 +68,8 @@ SC_MODULE(simple_bus_master_blocking)
 
 private:
   unsigned int m_unique_priority;
-  unsigned int m_address;
   bool m_lock;
   int m_timeout;
-  sc_clock clk;
-
-  filter filter_;
-
-  filter_interface     *filter_if;
-  filter_rst_interface *rst_if;
-  filter_rst        *filter_reset;
 
 }; // end class simple_bus_master_blocking
 

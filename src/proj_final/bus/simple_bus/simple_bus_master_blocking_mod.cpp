@@ -24,24 +24,6 @@ void simple_bus_master_blocking::main_action()
   unsigned int addr_init_mem_2 = 0x1388;
   simple_bus_status status;
 
-
-  filter_if->A1.write(1);
-  filter_if->A2.write(1);
-  filter_if->A3.write(1);
-  filter_if->A4.write(1);
-  filter_if->A5.write(1);
-  filter_if->A6.write(1);
-  filter_if->A7.write(1);
-  filter_if->A8.write(1);
-  filter_if->A9.write(20);
-  filter_if->in_data_en.write(1);
-
-  int iF = filter_if->F.read();
-
-  while (filter_if->out_data_rdy != 1) continue;
-  sb_fprintf(stdout, "\nF: %d", iF);
-
-
   sb_fprintf(stdout, "\nInitial state of Slow Memory 1:\n");
 
   while (addr_init_mem_1 + shift != 0x28) {
