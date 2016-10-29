@@ -12,7 +12,8 @@
 
 void simple_bus_master_blocking::main_action()
 {
-  const int num_items = 1000;
+  const int num_items = 900;
+  const int num_items_2 = 100;
   const unsigned int mylength = 0x04; // storage capacity/burst length in words
   unsigned int shift = 0;
   unsigned int shift_2 = 0;
@@ -21,7 +22,7 @@ void simple_bus_master_blocking::main_action()
   int iter = 0;
   int i = 0;
   unsigned int addr_init_mem_1 = 0x00;
-  unsigned int addr_init_mem_2 = 0x1388;
+  unsigned int addr_init_mem_2 = 0xFA0;
   simple_bus_status status;
 
   sb_fprintf(stdout, "\nInitial state of Slow Memory 1:\n");
@@ -32,32 +33,32 @@ void simple_bus_master_blocking::main_action()
     status = bus_port->burst_read(m_unique_priority, &mydata, addr_init_mem_1 + shift, 1, m_lock);
     if (status == SIMPLE_BUS_ERROR) sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
           sc_time_stamp().to_string().c_str(), name(), addr_init_mem_1 + shift);
-    else sb_fprintf(stdout, "(%03d) | ",
+    else sb_fprintf(stdout, "| (%03d) ",
                       mydata);
 
     shift += mylength;
 
   }
 
-  sb_fprintf(stdout, "... \n");
+  sb_fprintf(stdout, "|... \n");
   shift = 0;
 
   sb_fprintf(stdout, "Initial state of Slow Memory 2:\n");
 
-  while (addr_init_mem_2 + shift != 0x13B0) {
+  while (addr_init_mem_2 + shift != 0xFC8) {
 
     /* Slow Memory 2: initially empty */
     status = bus_port->burst_read(m_unique_priority, &mydata, addr_init_mem_2 + shift, 1, m_lock);
     if (status == SIMPLE_BUS_ERROR) sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
           sc_time_stamp().to_string().c_str(), name(), addr_init_mem_2 + shift);
-    else sb_fprintf(stdout, "(%03d) | ",
+    else sb_fprintf(stdout, "| (%03d) ",
                       mydata);
 
     shift += mylength;
 
   }
 
-  sb_fprintf(stdout, "... \n\n");
+  sb_fprintf(stdout, "|... \n\n");
   shift = 0;
 
   sb_fprintf(stdout, "BEGGINING SWAP: %s\n", sc_time_stamp().to_string().c_str() );
@@ -89,26 +90,28 @@ void simple_bus_master_blocking::main_action()
     if (++iter == num_items) {
 
       shift = 0;
+      iter = 0;
 
       sb_fprintf(stdout, "SWAP FINISHED: %s\n", sc_time_stamp().to_string().c_str() );
 
 
       sb_fprintf(stdout, "\nFinal state of Slow Memory 2:\n");
 
-      while (addr_init_mem_2 + shift != 0x2328) {
+      while (iter < num_items_2) {
 
         /* Slow Memory 2: initially empty */
         status = bus_port->burst_read(m_unique_priority, &mydata, addr_init_mem_2 + shift, 1, m_lock);
         if (status == SIMPLE_BUS_ERROR) sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n",
               sc_time_stamp().to_string().c_str(), name(), addr_init_mem_2 + shift);
-        else sb_fprintf(stdout, "%03d|",
+        else sb_fprintf(stdout, "| (%03d) ",
                           mydata);
 
         shift += mylength;
+        iter++;
 
       }
 
-      sb_fprintf(stdout, "\n");
+      sb_fprintf(stdout, "|\n\n");
 
       break;
     }

@@ -26,15 +26,13 @@ SC_MODULE(mem_swap)
     // create instances
     master_b = new simple_bus_master_blocking("master_b", 4, false, 3);
     mem_slow_init = new simple_bus_slow_mem("mem_slow_init", 0x00, 0xF9F, 1);
-    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", 0x1388, 0x2327, 1);
-    // bus = new simple_bus("bus",true); // verbose output
+    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", 0xFA0, 0x112F, 1);
     bus = new simple_bus("bus");
-    // arbiter = new simple_bus_arbiter("arbiter",true); // verbose output
     arbiter = new simple_bus_arbiter("arbiter");
 
     int i, data;
     unsigned int addr = 0x00;
-    for (i = 0; i < 1000; i++) {
+    for (i = 0; i < 900; i++) {
       data = rand() % 256;
       mem_slow_init->direct_write(&data, addr);
       addr += 4;
