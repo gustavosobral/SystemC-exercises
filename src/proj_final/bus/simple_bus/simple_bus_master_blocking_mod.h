@@ -53,11 +53,20 @@ SC_MODULE(simple_bus_master_blocking)
   simple_bus_master_blocking(sc_module_name name_
                              , unsigned int unique_priority
                              , bool lock
-                             , int timeout)
+                             , int timeout
+                             , int num_items
+                             , unsigned int word_length
+                             , unsigned int addr_mem_1
+                             , unsigned int addr_mem_2
+                             )
     : sc_module(name_)
     , m_unique_priority(unique_priority)
     , m_lock(lock)
     , m_timeout(timeout)
+    , num_items(num_items)
+    , word_length(word_length)
+    , addr_mem_1(addr_mem_1)
+    , addr_mem_2(addr_mem_2)
   {
     SC_THREAD(main_action);
     sensitive << clock.pos();
@@ -70,6 +79,10 @@ private:
   unsigned int m_unique_priority;
   bool m_lock;
   int m_timeout;
+  const unsigned int num_items;
+  const unsigned int word_length; 
+  unsigned int addr_mem_1;
+  unsigned int addr_mem_2;
 
 }; // end class simple_bus_master_blocking
 
