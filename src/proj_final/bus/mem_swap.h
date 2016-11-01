@@ -23,17 +23,21 @@ SC_MODULE(mem_swap)
   SC_CTOR(mem_swap)
     : C1("C1")
   {
+    int width = 4;
+    int height = 4;
+    unsigned int address_1 = 0x00;
+    unsigned int address_2 = 0xE10;
     // create instances
     bus = new simple_bus("bus");
     arbiter = new simple_bus_arbiter("arbiter");
-    master_b = new simple_bus_master_blocking("master_b", 4, false, 3, 900,
-                                              0x04, 0x00, 0xFA0);
-    mem_slow_init = new simple_bus_slow_mem("mem_slow_init", 0x00, 0xF9F, 1);
-    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", 0xFA0, 0x112F, 1);
+    master_b = new simple_bus_master_blocking("master_b", 4, false, 3, width*height,
+                                               0x04, address_1, address_2, width, height);
+    mem_slow_init = new simple_bus_slow_mem("mem_slow_init", address_1, address_1 + width*height*0x04 - 1, 1);
+    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", address_2, address_2 + width*height*0x04 - 1, 1);
 
     int i, data;
-    unsigned int addr = 0x00;
-    for (i = 0; i < 900; i++) {
+    unsigned int addr = address_1;
+    for (i = 0; i < width*height; i++) {
       data = rand() % 256;
       mem_slow_init->direct_write(&data, addr);
       addr += 4;

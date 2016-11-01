@@ -58,6 +58,8 @@ SC_MODULE(simple_bus_master_blocking)
                              , unsigned int word_length
                              , unsigned int addr_mem_1
                              , unsigned int addr_mem_2
+                             , unsigned int width
+                             , unsigned int height
                              )
     : sc_module(name_)
     , m_unique_priority(unique_priority)
@@ -67,6 +69,8 @@ SC_MODULE(simple_bus_master_blocking)
     , word_length(word_length)
     , addr_mem_1(addr_mem_1)
     , addr_mem_2(addr_mem_2)
+    , width(width)
+    , height(height)
   {
     SC_THREAD(main_action);
     sensitive << clock.pos();
@@ -74,6 +78,7 @@ SC_MODULE(simple_bus_master_blocking)
 
   // process
   void main_action();
+  int * read_frame(unsigned int shift);
 
 private:
   unsigned int m_unique_priority;
@@ -83,6 +88,8 @@ private:
   const unsigned int word_length; 
   unsigned int addr_mem_1;
   unsigned int addr_mem_2;
+  unsigned int width;
+  unsigned int height;
 
 }; // end class simple_bus_master_blocking
 
