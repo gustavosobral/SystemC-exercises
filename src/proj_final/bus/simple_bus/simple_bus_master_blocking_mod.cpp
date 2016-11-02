@@ -36,7 +36,9 @@ int * simple_bus_master_blocking::read_frame(unsigned int shift)
     } else {
       buffer[i] = 0;
     }
+    // sb_fprintf(stdout, "%03d ", adresses[i]);
   }
+  // sb_fprintf(stdout, "\n");
 
   return buffer;
 }

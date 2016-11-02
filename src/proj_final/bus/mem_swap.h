@@ -25,22 +25,41 @@ SC_MODULE(mem_swap)
   {
     int width = 4;
     int height = 4;
-    unsigned int address_1 = 0x00;
-    unsigned int address_2 = 0xE10;
+    unsigned int initial_address_1 = 0x00;
+    unsigned int final_address_1;
+    unsigned int initial_address_2;
+    unsigned int final_address_2;
+
+    final_address_1 = (initial_address_1 + (width*height + width*2 + height*2 + 4)*0x04) - 1;
+    initial_address_2 = final_address_1 + 1;
+    final_address_2 = (initial_address_2 + width*height*0x04) - 1;
+
     // create instances
     bus = new simple_bus("bus");
     arbiter = new simple_bus_arbiter("arbiter");
     master_b = new simple_bus_master_blocking("master_b", 4, false, 3, width*height,
-                                               0x04, address_1, address_2, width, height);
-    mem_slow_init = new simple_bus_slow_mem("mem_slow_init", address_1, address_1 + width*height*0x04 - 1, 1);
-    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", address_2, address_2 + width*height*0x04 - 1, 1);
+                                               0x04, initial_address_1, initial_address_2, width, height);
+    mem_slow_init = new simple_bus_slow_mem("mem_slow_init", initial_address_1, final_address_1, 1);
+    mem_slow_final = new simple_bus_slow_mem("mem_slow_final", initial_address_2, final_address_2, 1);
 
-    int i, data;
-    unsigned int addr = address_1;
-    for (i = 0; i < width*height; i++) {
-      data = rand() % 256;
-      mem_slow_init->direct_write(&data, addr);
-      addr += 4;
+    int i, j, data;
+    unsigned int addr = initial_address_1;
+    for (i = 0; i < height+1; i++) {
+      if(i == 0 || i == height) {
+        data = 0;
+        mem_slow_init->direct_write(&data, addr);
+        addr += 4;
+      } else {
+        for (j = 0; j < width+1; j++) {
+          if(i == 0 || i == height) {
+            data = 0;                    
+          } else {
+            data = rand() % 256;
+          }
+          mem_slow_init->direct_write(&data, addr);    
+          addr += 4;
+        }
+      }      
     }
 
     // connect instances
