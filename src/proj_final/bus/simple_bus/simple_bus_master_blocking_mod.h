@@ -78,18 +78,19 @@ SC_MODULE(simple_bus_master_blocking)
 
   // process
   void main_action();
-  int * read_frame(unsigned int shift);
+  int * read_frame(int shift);
 
 private:
   unsigned int m_unique_priority;
   bool m_lock;
   int m_timeout;
-  const unsigned int num_items;
+  const int num_items;
   const unsigned int word_length; 
   unsigned int addr_mem_1;
   unsigned int addr_mem_2;
-  unsigned int width;
-  unsigned int height;
+  int width;
+  int height;
+  int buffer[9];
 
 }; // end class simple_bus_master_blocking
 
