@@ -84,7 +84,7 @@ void simple_bus_master_blocking::main_action()
       if (status == SIMPLE_BUS_ERROR) {
         sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n", sc_time_stamp().to_string().c_str(), name(), addr_mem_1 + shift);
       } else {   
-        sb_fprintf(stdout, "(%03d) ", data);
+        sb_fprintf(stdout, "%03d ", data);
       }
       shift += word_length;
     }    
@@ -99,7 +99,7 @@ void simple_bus_master_blocking::main_action()
     if (status == SIMPLE_BUS_ERROR) {
       sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n", sc_time_stamp().to_string().c_str(), name(), addr_mem_2 + shift);
     } else {
-      sb_fprintf(stdout, "| (%03d) ", data);
+      sb_fprintf(stdout, "| %03d ", data);
     }
 
     shift += word_length;
@@ -142,7 +142,7 @@ void simple_bus_master_blocking::main_action()
           if (status == SIMPLE_BUS_ERROR) {
             sb_fprintf(stdout, "%s %s : blocking-read failed at address %x\n", sc_time_stamp().to_string().c_str(), name(), addr_mem_1 + shift);
           } else {     
-            sb_fprintf(stdout, "(%03d) ", data);
+            sb_fprintf(stdout, "%03d ", data);
           }
           shift += word_length;
         }

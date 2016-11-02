@@ -23,8 +23,8 @@ SC_MODULE(mem_swap)
   SC_CTOR(mem_swap)
     : C1("C1")
   {
-    int width = 4;
-    int height = 4;
+    int width = 14;
+    int height = 14;
     unsigned int address_1 = 0x00;
     unsigned int address_2 = 0xE10;
     // create instances
